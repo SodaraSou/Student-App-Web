@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { ref, onValue, set, get } from "firebase/database";
+import { ref, set, get } from "firebase/database";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { db, auth } from "../../firebase.config";
 
@@ -14,16 +14,21 @@ export const StudentAppProvider = ({ children }) => {
     fetchStudentData();
   }, []);
 
-  const fetchStudentData = () => {
+  const fetchStudentData = async () => {
     try {
       const dataRef = ref(db, "data");
-      onValue(dataRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          setStudentData(data);
-        }
-        setCheckStatus(false);
-      });
+      // onValue(dataRef, (snapshot) => {
+      //   const data = snapshot.val();
+      //   if (data) {
+      //     setStudentData(data);
+      //   }
+      //   setCheckStatus(false);
+      // });
+      const snapshot = await get(dataRef);
+      if (snapshot.exists()) {
+        setStudentData(snapshot.val());
+      }
+      setCheckStatus(false);
     } catch (error) {
       console.log(error);
     }
