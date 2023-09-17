@@ -1,23 +1,26 @@
-import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase.config";
+import { useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import StudentAppContext from "../components/context/StudentAppContext";
+import Spinner from "../components/Spinner";
 
 function Profile() {
-  const navigate = useNavigate();
-  const onLogout = () => {
-    try {
-      signOut(auth);
-      navigate("/signin");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { fetchStudentProfile, studentProfile, checkStatus } =
+    useContext(StudentAppContext);
+  const { studentId } = useParams();
+
+  useEffect(() => {
+    fetchStudentProfile(studentId);
+  }, [studentId]);
+
+  if (checkStatus) {
+    return <Spinner />;
+  }
 
   return (
     <>
-      <button className="btn btn-primary" onClick={onLogout}>
-        Log Out
-      </button>
+      <h1>Hello</h1>
+      <h2>{studentProfile.firstName}</h2>
+      <h2>{studentProfile.department}</h2>
     </>
   );
 }

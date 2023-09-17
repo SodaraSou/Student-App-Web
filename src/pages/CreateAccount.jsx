@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
 import StudentAppContext from "../components/context/StudentAppContext";
+import Spinner from "../components/Spinner";
 
 function CreateAccount() {
-  const { createStudentAccount } = useContext(StudentAppContext);
+  const { createStudentAccount, checkStatus } = useContext(StudentAppContext);
 
   const [inputData, setInputData] = useState({
     firstName: "",
@@ -20,9 +21,13 @@ function CreateAccount() {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(inputData);
     createStudentAccount(inputData);
   };
+
+  if (checkStatus) {
+    return <Spinner />;
+  }
+
   return (
     <div className="create-account-container">
       <h1>Create Account</h1>

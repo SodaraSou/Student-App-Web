@@ -10,17 +10,15 @@ function App() {
   return (
     <StudentAppProvider>
       <Router>
-        {/* <main> */}
         <Routes>
           <Route path="/" element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:studentId" element={<Profile />} />
             <Route path="/createaccount" element={<CreateAccount />} />
           </Route>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
-        {/* </main> */}
       </Router>
     </StudentAppProvider>
   );

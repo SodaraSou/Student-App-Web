@@ -1,23 +1,17 @@
 import { createContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { ref, onValue, set, get } from "firebase/database";
-import {
-  createUserWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { db, auth } from "../../firebase.config";
 
 const StudentAppContext = createContext();
 
 export const StudentAppProvider = ({ children }) => {
   const [studentData, setStudentData] = useState([]);
-  const [currentAccount, setCurrentAccount] = useState({
-    firstName: "",
-  });
+  const [studentProfile, setStudentProfile] = useState({});
+  const [checkStatus, setCheckStatus] = useState(true);
   useEffect(() => {
     fetchStudentData();
-    getCurrentUser();
   }, []);
 
   const fetchStudentData = () => {
@@ -28,6 +22,7 @@ export const StudentAppProvider = ({ children }) => {
         if (data) {
           setStudentData(data);
         }
+        setCheckStatus(false);
       });
     } catch (error) {
       console.log(error);
@@ -35,6 +30,7 @@ export const StudentAppProvider = ({ children }) => {
   };
 
   const createStudentAccount = async (studentDetial) => {
+    setCheckStatus(true);
     const { email, password, firstName, lastName, department, Class } =
       studentDetial;
     try {
@@ -46,6 +42,7 @@ export const StudentAppProvider = ({ children }) => {
       );
       const dataRef = ref(db, `data/${userCredential.user.uid}/`);
       set(dataRef, {
+        id: userCredential.user.uid,
         firstName,
         lastName,
         department,
@@ -53,6 +50,7 @@ export const StudentAppProvider = ({ children }) => {
         email,
         password,
       });
+      setCheckStatus(false);
       console.log("Account created successfully");
     } catch (error) {
       console.log(error);
@@ -68,28 +66,32 @@ export const StudentAppProvider = ({ children }) => {
     }
   };
 
-  const getCurrentUser = () => {
+  const fetchStudentProfile = async (studentId) => {
     try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const uid = user.uid;
-          const dataRef = ref(db, "data/" + uid + "/");
-          const snapshot = await get(dataRef);
-          const userData = snapshot.val();
-          setCurrentAccount((prevState) => ({
-            ...prevState,
-            firstName: userData.firstName,
-          }));
-        }
-      });
+      const dataRef = ref(db, `data/${studentId}/`);
+      const snapshot = await get(dataRef);
+      if (snapshot.exists()) {
+        setStudentProfile(snapshot.val());
+      }
+      setCheckStatus(false);
     } catch (error) {
       console.log(error);
     }
   };
 
+  // const removeStudentAccount = () => {};
+  // const updateStudentAccount = () => {};
+
   return (
     <StudentAppContext.Provider
-      value={{ studentData, logOut, createStudentAccount, currentAccount }}
+      value={{
+        studentData,
+        logOut,
+        createStudentAccount,
+        checkStatus,
+        fetchStudentProfile,
+        studentProfile,
+      }}
     >
       {children}
     </StudentAppContext.Provider>
