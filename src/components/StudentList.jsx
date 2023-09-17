@@ -1,15 +1,25 @@
 import { useContext } from "react";
 import StudentAppContext from "./context/StudentAppContext";
+import Spinner from "./Spinner";
+import { Link } from "react-router-dom";
 
 function StudentList() {
-  const { studentData } = useContext(StudentAppContext);
+  const { studentData, checkStatus } = useContext(StudentAppContext);
   const studentArray = Object.values(studentData);
 
+  if (checkStatus) {
+    return <Spinner />;
+  }
+
   return (
-    <div className="">
+    <div>
       {studentArray.map((student) => {
         return (
-          <div className="p-3 student-card bg-cyan" key={student.email}>
+          <Link
+            to={`/profile/${student.id}`}
+            className="p-3 student-card bg-cyan text-decoration-none text-dark"
+            key={student.id}
+          >
             <img
               src=""
               className="rounded-circle bg-danger"
@@ -21,7 +31,7 @@ function StudentList() {
               <h3 className="mb-0">{student.firstName}</h3>
               <p className="mb-0">Department: {student.department}</p>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>
