@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner";
 
 const PrivateRoute = () => {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [checkStatus, setCheckStatus] = useState(true);
+  // const [checkStatus, setCheckStatus] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -19,9 +19,9 @@ const PrivateRoute = () => {
     });
   }, []);
 
-  if (checkStatus) {
-    return <Spinner />;
-  }
+  // if (checkStatus) {
+  //   return <Spinner />;
+  // }
 
   return loggedIn ? <Outlet /> : <Navigate to="/signin" />;
 };
