@@ -17,13 +17,6 @@ export const StudentAppProvider = ({ children }) => {
   const fetchStudentData = async () => {
     try {
       const dataRef = ref(db, "data");
-      // onValue(dataRef, (snapshot) => {
-      //   const data = snapshot.val();
-      //   if (data) {
-      //     setStudentData(data);
-      //   }
-      //   setCheckStatus(false);
-      // });
       const snapshot = await get(dataRef);
       if (snapshot.exists()) {
         setStudentData(snapshot.val());
@@ -56,7 +49,6 @@ export const StudentAppProvider = ({ children }) => {
         password,
       });
       setCheckStatus(false);
-      console.log("Account created successfully");
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +88,7 @@ export const StudentAppProvider = ({ children }) => {
         checkStatus,
         fetchStudentProfile,
         studentProfile,
+        fetchStudentData,
       }}
     >
       {children}
