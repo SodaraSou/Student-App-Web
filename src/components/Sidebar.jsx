@@ -6,11 +6,6 @@ import StudentAppContext from "./context/StudentAppContext";
 function Sidebar() {
   const { logOut } = useContext(StudentAppContext);
 
-  const size = {
-    width: "280px",
-    height: "100vh",
-  };
-
   const smSize = {
     width: "4.5rem",
     height: "100vh",
@@ -20,7 +15,7 @@ function Sidebar() {
     <>
       <div
         className="d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-cyan"
-        style={size}
+        style={{ width: "280px", height: "100vh" }}
       >
         <a
           href="/"

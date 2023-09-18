@@ -5,22 +5,12 @@
 }
 
 body {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  min-height: 75rem;
+  padding-top: 4.5rem;
 }
 
 html {
   height: -webkit-fill-available;
-}
-
-main {
-  display: flex;
-  flex-wrap: nowrap;
-  height: 100vh;
-  height: -webkit-fill-available;
-  max-height: 100vh;
-  overflow-x: auto;
-  overflow-y: hidden;
 }
 
 .bi {
@@ -143,6 +133,7 @@ main {
   padding: 10px;
 }
 
+/* Loading animation */
 .loadingSpinnerContainer {
   position: fixed;
   top: 0;
