@@ -1,19 +1,24 @@
-// import { useContext } from "react";
-import Sidebar from "../components/Sidebar";
+import { useContext, useEffect } from "react";
+import Navbar from "../components/Navbar";
 import StudentList from "../components/StudentList";
-// import StudentAppContext from "../components/context/StudentAppContext";
+import StudentAppContext from "../components/context/StudentAppContext";
 
 function Home() {
-  // const { currentAccount } = useContext(StudentAppContext);
+  const { fetchStudentData } = useContext(StudentAppContext);
+  useEffect(() => {
+    fetchStudentData();
+  }, []);
 
   return (
-    <main>
-      <Sidebar />
+    <>
+      <Navbar />
       <div className="container">
-        <h1>Home Admin!</h1>
-        <StudentList />
+        <h1>Hello Admin!</h1>
+        <div className="d-flex justify-content-center justify-content-md-start">
+          <StudentList />
+        </div>
       </div>
-    </main>
+    </>
   );
 }
 
