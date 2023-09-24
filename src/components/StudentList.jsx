@@ -11,11 +11,11 @@ function StudentList() {
 
   useEffect(() => {
     dispatch({ type: "LOADING" });
-    const getStudentData = async () => {
+    const getStudentsData = async () => {
       const studentsData = await getStudents();
       dispatch({ type: "GET_STUDENTS", payload: studentsData });
     };
-    getStudentData();
+    getStudentsData();
   }, []);
 
   if (loading) {
