@@ -1,7 +1,5 @@
-import { useContext, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import StudentList from "../components/StudentList";
-import StudentAppContext from "../components/context/StudentAppContext";
 
 function Home() {
   return (
