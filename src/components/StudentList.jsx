@@ -1,14 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Logo from "../components/assets/splash.png";
 import StudentAppContext from "./context/StudentAppContext";
+import { getStudents } from "./context/StudentAppAction";
 import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
 
 function StudentList() {
-  const { studentData, checkStatus } = useContext(StudentAppContext);
-  const studentArray = Object.values(studentData);
+  const { students, loading, dispatch } = useContext(StudentAppContext);
+  const studentArray = Object.values(students);
 
-  if (checkStatus) {
+  useEffect(() => {
+    dispatch({ type: "LOADING" });
+    const getStudentData = async () => {
+      const studentsData = await getStudents();
+      dispatch({ type: "GET_STUDENTS", payload: studentsData });
+    };
+    getStudentData();
+  }, []);
+
+  if (loading) {
     return <Spinner />;
   }
 
@@ -24,7 +34,6 @@ function StudentList() {
         return (
           <Link
             to={`/profile/${student.id}`}
-            // href={`/profile/${student.id}`}
             className="p-3 student-card bg-cyan text-decoration-none text-dark"
             key={student.id}
           >

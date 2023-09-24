@@ -1,34 +1,22 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useReducer } from "react";
 import { Navigate } from "react-router-dom";
-import { ref, set, get } from "firebase/database";
+import { ref, set } from "firebase/database";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { db, auth } from "../../firebase.config";
+import StudentAppReducer from "./StudentAppReducer";
 
 const StudentAppContext = createContext();
 
 export const StudentAppProvider = ({ children }) => {
-  const [studentData, setStudentData] = useState([]);
-  const [studentProfile, setStudentProfile] = useState({});
-  const [checkStatus, setCheckStatus] = useState(true);
-  useEffect(() => {
-    fetchStudentData();
-  }, []);
-
-  const fetchStudentData = async () => {
-    try {
-      const dataRef = ref(db, "data");
-      const snapshot = await get(dataRef);
-      if (snapshot.exists()) {
-        setStudentData(snapshot.val());
-      }
-      setCheckStatus(false);
-    } catch (error) {
-      console.log(error);
-    }
+  const initialState = {
+    students: [],
+    student: {},
+    loading: false,
   };
 
+  const [state, dispatch] = useReducer(StudentAppReducer, initialState);
+
   const createStudentAccount = async (studentDetial) => {
-    setCheckStatus(true);
     const { email, password, firstName, lastName, department, Class } =
       studentDetial;
     try {
@@ -48,7 +36,6 @@ export const StudentAppProvider = ({ children }) => {
         email,
         password,
       });
-      setCheckStatus(false);
     } catch (error) {
       console.log(error);
     }
@@ -63,32 +50,16 @@ export const StudentAppProvider = ({ children }) => {
     }
   };
 
-  const fetchStudentProfile = async (studentId) => {
-    try {
-      const dataRef = ref(db, `data/${studentId}/`);
-      const snapshot = await get(dataRef);
-      if (snapshot.exists()) {
-        setStudentProfile(snapshot.val());
-      }
-      setCheckStatus(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // const removeStudentAccount = () => {};
   // const updateStudentAccount = () => {};
 
   return (
     <StudentAppContext.Provider
       value={{
-        studentData,
+        ...state,
+        dispatch,
         logOut,
         createStudentAccount,
-        checkStatus,
-        fetchStudentProfile,
-        studentProfile,
-        fetchStudentData,
       }}
     >
       {children}

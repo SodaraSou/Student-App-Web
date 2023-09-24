@@ -4,11 +4,6 @@ import StudentList from "../components/StudentList";
 import StudentAppContext from "../components/context/StudentAppContext";
 
 function Home() {
-  const { fetchStudentData } = useContext(StudentAppContext);
-  useEffect(() => {
-    fetchStudentData();
-  }, []);
-
   return (
     <>
       <Navbar />

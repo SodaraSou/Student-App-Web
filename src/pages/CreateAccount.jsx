@@ -4,7 +4,7 @@ import Spinner from "../components/Spinner";
 import Navbar from "../components/Navbar";
 
 function CreateAccount() {
-  const { createStudentAccount, checkStatus } = useContext(StudentAppContext);
+  const { createStudentAccount, loading } = useContext(StudentAppContext);
 
   const [inputData, setInputData] = useState({
     firstName: "",
@@ -25,7 +25,7 @@ function CreateAccount() {
     createStudentAccount(inputData);
   };
 
-  if (checkStatus) {
+  if (loading) {
     return <Spinner />;
   }
 
