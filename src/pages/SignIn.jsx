@@ -36,7 +36,7 @@ function SignIn() {
     <>
       <div className="min-h-screen flex flex-col justify-center items-center gap-4 p-4 md:p-0">
         <img src={Logo} alt="Logo" width={100} height={100} />
-        <div className="w-full md:w-96 h-auto shadow-xl rounded-2xl">
+        <div className="w-full md:w-96 h-auto border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700 rounded-2xl">
           <h1 className="text-2xl font-semibold p-4 text-center">Sign In</h1>
           <form className="px-4" onSubmit={onsubmit}>
             <div className="mb-4">
@@ -71,7 +71,7 @@ function SignIn() {
                 onChange={onChange}
               />
             </div>
-            <button className="text-sm font-medium w-full bg-cyan py-2.5 rounded-md mb-4">
+            <button className="text-sm text-white font-medium w-full py-2.5 mb-4 bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Sign In
             </button>
           </form>
