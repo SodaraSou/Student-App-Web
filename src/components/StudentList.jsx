@@ -27,7 +27,7 @@ function StudentList() {
       {studentArray.map((student) => {
         return (
           <div
-            className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            className="w-full bg-white border border-gray-200 rounded-lg shadow"
             key={student.id}
           >
             <div className="flex flex-col items-center py-10">
