@@ -17,6 +17,16 @@ const StudentAppReducer = (state, action) => {
         student: action.payload,
         loading: false,
       };
+    case "CREATE_STUDENT":
+      return {
+        ...state,
+        loading: false,
+      };
+    case "DELETE_STUDENT":
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       break;
   }

@@ -1,10 +1,11 @@
 import { useState, useContext } from "react";
+import { createStudentAccount } from "../components/context/StudentAppAction";
 import StudentAppContext from "../components/context/StudentAppContext";
 import Spinner from "../components/Spinner";
 import Navbar from "../components/Navbar";
 
 function CreateAccount() {
-  const { createStudentAccount, loading } = useContext(StudentAppContext);
+  const { loading, dispatch } = useContext(StudentAppContext);
 
   const [inputData, setInputData] = useState({
     firstName: "",
@@ -20,9 +21,13 @@ function CreateAccount() {
       [e.target.id]: e.target.value,
     }));
   };
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    createStudentAccount(inputData);
+    dispatch({ type: "LOADING" });
+    const test = await createStudentAccount(inputData);
+    if (test) {
+      dispatch({ type: "CREATE_STUDENT" });
+    }
   };
 
   if (loading) {
@@ -32,94 +37,109 @@ function CreateAccount() {
   return (
     <>
       <Navbar />
-      <div className="create-account-container">
-        <h1>Create Account</h1>
-        <form className="row g-3" onSubmit={onSubmit}>
-          <div className="col-md-6">
-            <label htmlFor="firstname" className="form-label">
-              First name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="firstName"
-              placeholder="First name"
-              onChange={onChange}
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="lastName" className="form-label">
-              Last Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="lastName"
-              placeholder="Last name"
-              onChange={onChange}
-            />
-          </div>
-          <div className="col-12">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="Email"
-              onChange={onChange}
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="Department" className="form-label">
-              Department
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="department"
-              placeholder="Department"
-              onChange={onChange}
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="class" className="form-label">
-              Class
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="Class"
-              placeholder="Class"
-              onChange={onChange}
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="Department" className="form-label">
-              Password
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="password"
-              placeholder="Password"
-              onChange={onChange}
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="class" className="form-label">
-              Confirm Password
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Confirm Password"
-              onChange={onChange}
-            />
-          </div>
-          <button className="btn btn-primary">Create Account</button>
-        </form>
+      <div className="max-w-5xl mx-auto">
+        <div className="p-4 md:py-10">
+          <h1 className="text-2xl md:text-4xl font-semibold mb-4">
+            Create New Account
+          </h1>
+          <form onSubmit={onSubmit}>
+            <div className="flex flex-col md:flex-row gap-4 mb-2">
+              <div className="flex flex-col w-full">
+                <label htmlFor="firstName" className="mb-2">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  placeholder=""
+                  onChange={onChange}
+                  className="border p-2 rounded-xl"
+                />
+              </div>
+              <div className="flex flex-col w-full">
+                <label htmlFor="lastName" className="mb-2">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  placeholder=""
+                  onChange={onChange}
+                  className="border p-2 rounded-xl"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col w-full mb-2">
+              <label htmlFor="firstName" className="mb-2">
+                Email
+              </label>
+              <input
+                type="text"
+                id="email"
+                placeholder=""
+                onChange={onChange}
+                className="border p-2 rounded-xl"
+              />
+            </div>
+            <div className="flex flex-col md:flex-row gap-4 mb-2">
+              <div className="flex flex-col w-full">
+                <label htmlFor="firstName" className="mb-2">
+                  Department
+                </label>
+                <input
+                  type="text"
+                  id="department"
+                  placeholder=""
+                  onChange={onChange}
+                  className="border p-2 rounded-xl"
+                />
+              </div>
+              <div className="flex flex-col w-full">
+                <label htmlFor="lastName" className="mb-2">
+                  Class
+                </label>
+                <input
+                  type="text"
+                  id="Class"
+                  placeholder=""
+                  onChange={onChange}
+                  className="border p-2 rounded-xl"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row gap-4 mb-4">
+              <div className="flex flex-col w-full">
+                <label htmlFor="firstName" className="mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder=""
+                  onChange={onChange}
+                  className="border p-2 rounded-xl"
+                />
+              </div>
+              <div className="flex flex-col w-full">
+                <label htmlFor="lastName" className="mb-2">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder=""
+                  // onChange={onChange}
+                  className="border p-2 rounded-xl"
+                />
+              </div>
+            </div>
+            <div className="flex md:justify-end">
+              <button className="w-full md:w-auto text-white p-2 px-6 bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
