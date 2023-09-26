@@ -11,7 +11,7 @@ function Home() {
         <StudentList />
         <Link
           to="/createaccount"
-          className="h-full flex flex-col border items-center justify-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+          className="h-full flex flex-col border items-center justify-center border-gray-200 rounded-lg shadow"
         >
           <img src={PlusSign} alt="PlusSign" height={24} width={24} />
           <h1>Add new student</h1>
