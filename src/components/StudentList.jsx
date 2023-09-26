@@ -36,7 +36,7 @@ function StudentList() {
                 src={Logo}
                 alt="test"
               />
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+              <h5 className="mb-1 text-xl font-medium text-gray-900">
                 {student.firstName}
               </h5>
               <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -51,7 +51,7 @@ function StudentList() {
                 </Link>
                 <a
                   href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 "
                 >
                   Message
                 </a>
